@@ -12,8 +12,10 @@ pipeline {
         stage('Build') {
             steps {
                 echo '--- Running Build Script ---'
-                sh 'chmod +x build.sh'
-                sh './build.sh'
+                dir('Jenkins/Task-2') {
+                    sh 'chmod +x build.sh'
+                    sh './build.sh'
+                }
             }
         }
 
