@@ -28,7 +28,7 @@ pipeline {
     post {
         success {
             echo 'Build completed successfully!'
-            mail to: 'dineshrj0793@gmail.com',
+            mail to: 'mailtodineshbai@gmail.com',
                  subject: "✅ Jenkins Build SUCCESS - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                  body: """Build Status : SUCCESS
 Job          : ${env.JOB_NAME}
@@ -40,7 +40,7 @@ The build was triggered by a commit and completed successfully.
         }
         failure {
             echo 'Build failed!'
-            mail to: 'dineshrj0793@gmail.com',
+            mail to: 'mailtodineshbai@gmail.com',
                  subject: "❌ Jenkins Build FAILURE - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
                  body: """Build Status : FAILURE
 Job          : ${env.JOB_NAME}
