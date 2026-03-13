@@ -67,28 +67,28 @@ TESTS_FAILED=0
 # Test 1: Check build directory exists
 if [ -d "$BUILD_DIR" ]; then
     echo "[PASS] Build directory exists"
-    ((TESTS_PASSED++))
+    TESTS_PASSED=$((TESTS_PASSED + 1))
 else
     echo "[FAIL] Build directory missing"
-    ((TESTS_FAILED++))
+    TESTS_FAILED=$((TESTS_FAILED + 1))
 fi
 
 # Test 2: Check app.py was created
 if [ -f "$BUILD_DIR/app.py" ]; then
     echo "[PASS] app.py created successfully"
-    ((TESTS_PASSED++))
+    TESTS_PASSED=$((TESTS_PASSED + 1))
 else
     echo "[FAIL] app.py not found"
-    ((TESTS_FAILED++))
+    TESTS_FAILED=$((TESTS_FAILED + 1))
 fi
 
 # Test 3: Check script is executable
 if [ -x "$0" ]; then
     echo "[PASS] Build script is executable"
-    ((TESTS_PASSED++))
+    TESTS_PASSED=$((TESTS_PASSED + 1))
 else
     echo "[PASS] Build script ran successfully (via bash)"
-    ((TESTS_PASSED++))
+    TESTS_PASSED=$((TESTS_PASSED + 1))
 fi
 
 echo ""
