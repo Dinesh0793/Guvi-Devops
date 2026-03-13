@@ -1,0 +1,54 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo '--- Checking out source code ---'
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo '--- Running Build Script ---'
+                sh 'chmod +x build.sh'
+                sh './build.sh'
+            }
+        }
+
+        stage('Archive') {
+            steps {
+                echo '--- Archiving Build Artifacts ---'
+                archiveArtifacts artifacts: 'build_output/**', fingerprint: true, allowEmptyArchive: true
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build completed successfully!'
+            mail to: 'dineshrj0793@gmail.com',
+                 subject: "✅ Jenkins Build SUCCESS - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                 body: """Build Status : SUCCESS
+Job          : ${env.JOB_NAME}
+Build Number : #${env.BUILD_NUMBER}
+Build URL    : ${env.BUILD_URL}
+
+The build was triggered by a commit and completed successfully.
+"""
+        }
+        failure {
+            echo 'Build failed!'
+            mail to: 'dineshrj0793@gmail.com',
+                 subject: "❌ Jenkins Build FAILURE - ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                 body: """Build Status : FAILURE
+Job          : ${env.JOB_NAME}
+Build Number : #${env.BUILD_NUMBER}
+Build URL    : ${env.BUILD_URL}
+
+The build was triggered by a commit and has FAILED. Please check the console output for details.
+"""
+        }
+    }
+}
